@@ -15,3 +15,7 @@ jobs:
           name: Lint App
           command: |
             make lint
+workflows:
+  default:
+    jobs:
+      - lint-app
