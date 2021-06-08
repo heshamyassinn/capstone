@@ -3,13 +3,9 @@ version: 2.1
 jobs:
   lint-app:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: circleci/python:3.7.3-stretch
     steps:
       - checkout
-      - run:
-          name: Install prerequsites
-          command: |            
-             sudo apt-get install make
       - run:
           name: Install dependencies
           command: |
