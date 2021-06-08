@@ -7,6 +7,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install prerequsites
+          command: |            
+             sudo apt-get install make
+      - run:
           name: Install dependencies
           command: |
             make setup
