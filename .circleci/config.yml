@@ -19,7 +19,7 @@ jobs:
       - run:
           name: run lint
           command: |
-            . devops/bin/activate
+            . capstone/bin/activate
             make lint
       - save_cache:
           paths:
