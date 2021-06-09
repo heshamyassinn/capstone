@@ -38,7 +38,7 @@ jobs:
           name: Build Docker
           command: |
             docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
-            docker build -t capstone:${CIRCLE_WORKFLOW_ID:0:7} .
+            docker build -t heshamyassin/capstone:${CIRCLE_WORKFLOW_ID:0:7} .
             docker image ls
             docker push heshamyassin/capstone:${CIRCLE_WORKFLOW_ID:0:7}
             docker tag heshamyassin/capstone:${CIRCLE_WORKFLOW_ID:0:7} heshamyassin/capstone:latest
