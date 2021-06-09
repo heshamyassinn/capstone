@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   aws-eks: circleci/aws-eks@1.0.3
-  kubernetes: circleci/kubernetes@0.11.2
+  kubernetes: circleci/kubernetes@0.12.0
 
 jobs:
   lint-app:
@@ -67,8 +67,33 @@ jobs:
           install-kubectl: true
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
-          resource-file-path: appdeployment.yml
+          resource-file-path: eks_config.yml
           resource-name: deployment/capstone
+  
+  test-cluster:
+    executor: aws-eks/python3
+    parameters:
+      cluster-name:
+        description: |
+          gsvcapstone
+        type: string
+    steps:
+      - kubernetes/install
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+      - run:
+          name: Test cluster
+          command: |
+            kubectl get svc
+            kubectl get svc > test-cluster.txt
+            kubectl get nodes
+            kubectl get deployment
+            if grep -q "capstone" test-cluster.txt
+            then
+              return 0
+            else
+              return 1
+            fi
   
 workflows:
   default:
@@ -77,13 +102,13 @@ workflows:
       - build-docker:
           requires: [lint-app]
       - aws-eks/create-cluster:
-          cluster-name: capstone-cluster
+          cluster-name: capstone
       - create-deployment:
-          cluster-name: capstone-cluster
+          cluster-name: capstone
           requires:
             - aws-eks/create-cluster
       - aws-eks/update-container-image:
-          cluster-name: capstone-cluster
+          cluster-name: capstone
           container-image-updates: capstone=heshamyassin/capstone:latest
           post-steps:
               - kubernetes/delete-resource:
@@ -94,4 +119,8 @@ workflows:
           requires:
               - create-deployment
           resource-name: deployment/capstone
+      - test-cluster:
+          cluster-name: capstone
+          requires:
+            - aws-eks/update-container-image
       
