@@ -37,7 +37,7 @@ jobs:
       - run:
           name: Build Docker
           command: |
-            docker login -u ${DOCKER_USER} -p ${DOCKER_PWD}
+            docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
             docker build -t heshamyassin/capstone:${CIRCLE_WORKFLOW_ID:0:7}
       - save_cache:
           paths:
