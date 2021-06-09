@@ -124,7 +124,7 @@ workflows:
       #     requires:
       #       - aws-eks/update-container-image
       - aws-eks/delete-cluster:
-          cluster-name: hyacapstone
+          cluster-name: capstone-cluster
           # requires:
           #   - test-cluster
       
