@@ -49,5 +49,5 @@ workflows:
   default:
     jobs:
       - lint-app
-      - build-docker
+      - build-docker:
         requires: [lint-app]
