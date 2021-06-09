@@ -27,8 +27,7 @@ jobs:
           key: app-dependencies
     
   build-docker:
-    docker:
-      - image: amazon/aws-cli
+    machine: true
     steps:
       - checkout
             # Download and cache dependencies
