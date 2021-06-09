@@ -84,12 +84,14 @@ workflows:
             - aws-eks/create-cluster
       - aws-eks/update-container-image:
           cluster-name: capstone
-          container-image-updates: capstone=heshamyassin/capstone
+          container-image-updates: gsvcapstone=heshamyassin/capstone
           post-steps:
               - kubernetes/delete-resource:
                   resource-names: capstone
                   resource-types: deployment
                   wait: true
           record: true
-          requires: [create-deployment]
+          requires:
+              - create-deployment
+          resource-name: deployment/capstone
       
