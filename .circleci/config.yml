@@ -103,10 +103,10 @@ workflows:
           requires: [lint-app]
       - aws-eks/create-cluster:
           cluster-name: capstone-proj
-      # - create-deployment:
-      #     cluster-name: capstone-proj
-      #     requires:
-      #       - aws-eks/create-cluster
+      - create-deployment:
+          cluster-name: capstone-proj
+          requires:
+            - aws-eks/create-cluster
       - aws-eks/update-container-image:
           cluster-name: capstone-proj
           container-image-updates: capstone=heshamyassin/capstone:latest
