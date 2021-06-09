@@ -19,11 +19,11 @@ jobs:
       - run:
           name: run lint
           command: |
-            . capstone/bin/activate
+            . capstone-env/bin/activate
             make lint
       - save_cache:
           paths:
-            - ./devops
+            - ./capstone-env
           key: app-dependencies
 
 workflows:
