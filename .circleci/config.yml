@@ -98,33 +98,33 @@ jobs:
 workflows:
   default:
     jobs:
-      - lint-app
-      - build-docker:
-          requires: [lint-app]
-      - aws-eks/create-cluster:
-          cluster-name: capstoneproj
-      - create-deployment:
-          cluster-name: capstoneproj
-          requires:
-            - aws-eks/create-cluster
-      - aws-eks/update-container-image:
-          cluster-name: capstoneproj
-          container-image-updates: capstone=heshamyassin/capstone:latest
-          # post-steps:
-          #     - kubernetes/delete-resource:
-          #         resource-names: capstone
-          #         resource-types: deployment
-          #         wait: true
-          record: true
-          requires:
-              - create-deployment
-          resource-name: deployment/capstone
-      - test-cluster:
-          cluster-name: capstoneproj
-          requires:
-            - aws-eks/update-container-image
+      # - lint-app
+      # - build-docker:
+      #     requires: [lint-app]
+      # - aws-eks/create-cluster:
+      #     cluster-name: capstoneproj
+      # - create-deployment:
+      #     cluster-name: capstoneproj
+      #     requires:
+      #       - aws-eks/create-cluster
+      # - aws-eks/update-container-image:
+      #     cluster-name: capstoneproj
+      #     container-image-updates: capstone=heshamyassin/capstone:latest
+      #     # post-steps:
+      #     #     - kubernetes/delete-resource:
+      #     #         resource-names: capstone
+      #     #         resource-types: deployment
+      #     #         wait: true
+      #     record: true
+      #     requires:
+      #         - create-deployment
+      #     resource-name: deployment/capstone
+      # - test-cluster:
+      #     cluster-name: capstoneproj
+      #     requires:
+      #       - aws-eks/update-container-image
       - aws-eks/delete-cluster:
-          cluster-name: capstoneproj
-          requires:
-            - test-cluster
+          cluster-name: hyacapstone
+          # requires:
+          #   - test-cluster
       
