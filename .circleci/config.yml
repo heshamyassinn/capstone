@@ -75,7 +75,7 @@ jobs:
     parameters:
       cluster-name:
         description: |
-          gsvcapstone
+          capstone
         type: string
     steps:
       - kubernetes/install
@@ -102,13 +102,13 @@ workflows:
       - build-docker:
           requires: [lint-app]
       - aws-eks/create-cluster:
-          cluster-name: capstone-proj
+          cluster-name: capstoneproj
       - create-deployment:
-          cluster-name: capstone-proj
+          cluster-name: capstoneproj
           requires:
             - aws-eks/create-cluster
       - aws-eks/update-container-image:
-          cluster-name: capstone-proj
+          cluster-name: capstoneproj
           container-image-updates: capstone=heshamyassin/capstone:latest
           # post-steps:
           #     - kubernetes/delete-resource:
@@ -120,11 +120,11 @@ workflows:
               - create-deployment
           resource-name: deployment/capstone
       - test-cluster:
-          cluster-name: capstone-proj
+          cluster-name: capstoneproj
           requires:
             - aws-eks/update-container-image
       - aws-eks/delete-cluster:
-          cluster-name: capstone-proj
+          cluster-name: capstoneproj
           requires:
             - test-cluster
       
