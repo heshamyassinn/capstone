@@ -102,24 +102,24 @@ workflows:
       - build-docker:
           requires: [lint-app]
       - aws-eks/create-cluster:
-          cluster-name: capstone
+          cluster-name: hyacapstone
       - create-deployment:
-          cluster-name: capstone
+          cluster-name: hyacapstone
           requires:
             - aws-eks/create-cluster
       - aws-eks/update-container-image:
-          cluster-name: capstone
+          cluster-name: hyacapstone
           container-image-updates: capstone=heshamyassin/capstone
           record: true
           requires:
               - create-deployment
           resource-name: deployment/capstone
       - test-cluster:
-          cluster-name: capstone
+          cluster-name: hyacapstone
           requires:
             - aws-eks/update-container-image
       # - aws-eks/delete-cluster:
-      #     cluster-name: capstone
+      #     cluster-name: hyacapstone
       #     # requires:
       #     #   - test-cluster
       
