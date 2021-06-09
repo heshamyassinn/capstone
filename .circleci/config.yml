@@ -57,7 +57,7 @@ jobs:
     parameters:
       cluster-name:
         description: |
-          capstone-cluster
+          capstone
         type: string
     steps:
       - checkout
@@ -90,9 +90,9 @@ jobs:
             kubectl get deployment
             if grep -q "capstone" test-cluster.txt
             then
-              return 0
+              exit 0
             else
-              return 1
+              exit 1
             fi
   
 workflows:
@@ -123,4 +123,8 @@ workflows:
           cluster-name: capstone-proj
           requires:
             - aws-eks/update-container-image
+      - aws-eks/delete-cluster:
+          cluster-name: capstone-proj
+          requires:
+            - test-cluster
       
