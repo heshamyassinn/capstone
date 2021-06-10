@@ -13,9 +13,7 @@ jobs:
           name: delete
           command: |
             aws cloudformation delete-stack --stack-name "eksctl-capstone-proj-cluster"
-            aws cloudformation delete-stack --stack-name "eksctl-capstone-cluster-cluster"
             aws cloudformation delete-stack --stack-name "eksctl-hyacapstone-cluster"
-            aws cloudformation delete-stack --stack-name "eksctl-hyacapstone-nodegroup-ng-73169e5a"
             aws cloudformation delete-stack --stack-name "eksctl-capstone-cluster"
   lint-app:
     docker:
