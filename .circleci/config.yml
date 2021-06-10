@@ -115,25 +115,27 @@ jobs:
 workflows:
   default:
     jobs:
-      # - lint-app
-      # - build-docker:
-      #     requires: [lint-app]
-      # - aws-eks/create-cluster:
-      #     cluster-name: capstone
-      # - create-deployment:
-      #     cluster-name: capstone
-      #     requires:
-      #       - aws-eks/create-cluster
-      # - aws-eks/update-container-image:
-      #     cluster-name: capstone
-      #     container-image-updates: capstone=heshamyassin/capstone
-      #     record: true
-      #     requires:
-      #         - create-deployment
-      #     resource-name: deployment/capstone
-      # - test-cluster:
-      #     cluster-name: capstone
-      #     requires:
-      #       - aws-eks/update-container-image
-      - smoketest-app
+      - lint-app
+      - build-docker:
+          requires: [lint-app]
+      - aws-eks/create-cluster:
+          cluster-name: capstone
+      - create-deployment:
+          cluster-name: capstone
+          requires:
+            - aws-eks/create-cluster
+      - aws-eks/update-container-image:
+          cluster-name: capstone
+          container-image-updates: capstone=heshamyassin/capstone
+          record: true
+          requires:
+              - create-deployment
+          resource-name: deployment/capstone
+      - test-cluster:
+          cluster-name: capstone
+          requires:
+            - aws-eks/update-container-image
+      - smoketest-app:
+          requires:
+            - test-cluster
       
