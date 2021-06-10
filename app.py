@@ -1,6 +1,8 @@
 from flask import Flask           # import flask
 app = Flask(__name__)             # create an app instance
 
+lintfailure
+
 @app.route("/")                   # at the end point /
 def hello():                      # call method hello
     return "My name is Hesham!"         # which returns "My name is Hesham!"
