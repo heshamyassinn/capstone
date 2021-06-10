@@ -100,8 +100,10 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - wait_for:
-          timeout: 600
+      - run:
+          name: Sleep
+          command: |
+            sleep 600
       - run:
           name: App Smoke Test
           command: |
