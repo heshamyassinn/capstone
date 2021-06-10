@@ -103,7 +103,7 @@ jobs:
       - run:
           name: Sleep
           command: |
-            sleep 60
+            sleep 600
       - run:
           name: App Smoke Test
           command: |
@@ -119,27 +119,27 @@ jobs:
 workflows:
   default:
     jobs:
-      # - lint-app
-      # - build-docker:
-      #     requires: [lint-app]
-      # - aws-eks/create-cluster:
-      #     cluster-name: capstone
-      # - create-deployment:
-      #     cluster-name: capstone
-      #     requires:
-      #       - aws-eks/create-cluster
-      # - aws-eks/update-container-image:
-      #     cluster-name: capstone
-      #     container-image-updates: capstone=heshamyassin/capstone
-      #     record: true
-      #     requires:
-      #         - create-deployment
-      #     resource-name: deployment/capstone
-      # - test-cluster:
-      #     cluster-name: capstone
-      #     requires:
-      #       - aws-eks/update-container-image
+      - lint-app
+      - build-docker:
+          requires: [lint-app]
+      - aws-eks/create-cluster:
+          cluster-name: capstone
+      - create-deployment:
+          cluster-name: capstone
+          requires:
+            - aws-eks/create-cluster
+      - aws-eks/update-container-image:
+          cluster-name: capstone
+          container-image-updates: capstone=heshamyassin/capstone
+          record: true
+          requires:
+              - create-deployment
+          resource-name: deployment/capstone
+      - test-cluster:
+          cluster-name: capstone
+          requires:
+            - aws-eks/update-container-image
       - smoketest-app
-          # requires:
-          #   - test-cluster
+          requires:
+            - test-cluster
       
