@@ -103,7 +103,7 @@ jobs:
       - run:
           name: Sleep
           command: |
-            sleep 600
+            sleep 60
       - run:
           name: App Smoke Test
           command: |
