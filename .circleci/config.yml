@@ -95,28 +95,45 @@ jobs:
             else
               exit 1
             fi
+  smoketest-app:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: App Smoke Test
+          command: |
+            URL=$(aws elb describe-load-balancers --query 'LoadBalancerDescriptions[*].DNSName' --output text) 
+            if curl -s ${URL} | grep "My name is Hesham!"
+            then
+              exit 0
+            else
+              exit 1
+            fi
+  
   
 workflows:
   default:
     jobs:
-      - lint-app
-      - build-docker:
-          requires: [lint-app]
-      - aws-eks/create-cluster:
-          cluster-name: capstone
-      - create-deployment:
-          cluster-name: capstone
-          requires:
-            - aws-eks/create-cluster
-      - aws-eks/update-container-image:
-          cluster-name: capstone
-          container-image-updates: capstone=heshamyassin/capstone
-          record: true
-          requires:
-              - create-deployment
-          resource-name: deployment/capstone
-      - test-cluster:
-          cluster-name: capstone
-          requires:
-            - aws-eks/update-container-image
+      # - lint-app
+      # - build-docker:
+      #     requires: [lint-app]
+      # - aws-eks/create-cluster:
+      #     cluster-name: capstone
+      # - create-deployment:
+      #     cluster-name: capstone
+      #     requires:
+      #       - aws-eks/create-cluster
+      # - aws-eks/update-container-image:
+      #     cluster-name: capstone
+      #     container-image-updates: capstone=heshamyassin/capstone
+      #     record: true
+      #     requires:
+      #         - create-deployment
+      #     resource-name: deployment/capstone
+      # - test-cluster:
+      #     cluster-name: capstone
+      #     requires:
+      #       - aws-eks/update-container-image
+      - smoke-test
       
