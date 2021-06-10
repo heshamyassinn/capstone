@@ -139,7 +139,7 @@ workflows:
           cluster-name: capstone
           requires:
             - aws-eks/update-container-image
-      - smoketest-app
+      - smoketest-app:
           requires:
             - test-cluster
       
