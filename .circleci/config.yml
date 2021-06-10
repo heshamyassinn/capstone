@@ -87,6 +87,7 @@ jobs:
             kubectl get svc
             kubectl get svc > test-cluster.txt
             kubectl get nodes
+            kubectl get pods
             kubectl get deployment
             if grep -q "capstone" test-cluster.txt
             then
@@ -102,24 +103,24 @@ workflows:
       - build-docker:
           requires: [lint-app]
       - aws-eks/create-cluster:
-          cluster-name: hyacapstone
+          cluster-name: capstone
       - create-deployment:
-          cluster-name: hyacapstone
+          cluster-name: capstone
           requires:
             - aws-eks/create-cluster
       - aws-eks/update-container-image:
-          cluster-name: hyacapstone
+          cluster-name: capstone
           container-image-updates: capstone=heshamyassin/capstone
           record: true
           requires:
               - create-deployment
           resource-name: deployment/capstone
       - test-cluster:
-          cluster-name: hyacapstone
+          cluster-name: capstone
           requires:
             - aws-eks/update-container-image
       # - aws-eks/delete-cluster:
-      #     cluster-name: hyacapstone
+      #     cluster-name: capstone
       #     # requires:
       #     #   - test-cluster
       
